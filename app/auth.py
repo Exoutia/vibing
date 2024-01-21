@@ -1,6 +1,6 @@
 import functools
 
-from flask import (
+from flask import ( # type: ignore
     Blueprint,
     flash,
     g,
@@ -9,7 +9,8 @@ from flask import (
     request,
     session,
     url_for,
-)
+) # type: ignore
+
 from werkzeug.security import check_password_hash  # type: ignore
 from werkzeug.security import generate_password_hash
 
@@ -23,8 +24,15 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+        password2 = request.form["password2"]
+
+
         db = get_db()
         error = None
+
+        if password != password2:
+            error = "Password does not match"
+            return render_template("auth/register.html")
 
         if not username:
             error = "username is requried."
@@ -66,6 +74,7 @@ def login():
         if error is None:
             session.clear()
             session["user_id"] = user["id"]
+            session["username"] = user["username"]
             return redirect(url_for("index"))
         flash(error)
     return render_template("auth/login.html")
