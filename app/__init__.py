@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, session  # type: ignore
+from flask import Flask, render_template  # type: ignore
 
 
 def create_app(test_config=None):
@@ -23,12 +23,11 @@ def create_app(test_config=None):
 
     @app.route("/")
     def index():
-        username = session["username"]
-        return render_template('index.html', username=username)
+        return render_template("index.html")
 
     @app.route("/hello")
     def hello():
-        return render_template('hello.html')
+        return render_template("hello.html")
 
     from . import db
 
@@ -38,6 +37,16 @@ def create_app(test_config=None):
 
     app.register_blueprint(auth.bp)
 
+    from . import todo
 
+    app.register_blueprint(todo.bp)
+
+    from . import meditation
+
+    app.register_blueprint(meditation.bp)
+
+    from . import posts
+
+    app.register_blueprint(posts.bp)
 
     return app

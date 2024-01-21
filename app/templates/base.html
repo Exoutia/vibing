@@ -1,15 +1,15 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <title>{% block title %}{% endblock %} - Vibing</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" />
-</head>
-
-<body class="content">
-  {% block content %}{% endblock %}
-</body>
-
+    <head>
+        <title>
+            {% block title %}{% endblock %}
+        - Vibing</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" />
+    </head>
+    <body class="content">
+        {% for message in get_flashed_messages() %}<div class="flash">{{ message }}</div>{% endfor %}
+        {% block content %}{% endblock %}
+    </body>
 </html>

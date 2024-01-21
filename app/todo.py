@@ -1,8 +1,11 @@
 from flask import Blueprint # type: ignore
+from .auth import login_required
 
 bp = Blueprint('todo', __name__, url_prefix='/todo')
 
+
 @bp.route('/')
+@login_required
 def index():
     return 'TODO for myself.'
 
@@ -10,10 +13,10 @@ def index():
 def add():
     return 'TODO for the user.'
 
-@bp.delete('/delete/<int:id>', method=('POST', 'GET'))
+@bp.route('/delete/<int:id>', methods=('POST', 'GET'))
 def delete(id):
     return f'TODO to delete {id}'
 
-@bp.put('/update/<int:id>', method=('POST', 'GET'))
+@bp.route('/update/<int:id>', methods=('POST', 'GET'))
 def update(id):
     return f'TODO to update {id}'

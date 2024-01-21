@@ -1,7 +1,32 @@
 {% extends 'base.html' %}
-
-{% block title %} Home {% endblock %}
-
+{% block title %}Home{% endblock %}
 {% block content %}
-<h1>Home {{username}}</h1>
+<h1>Hello {{ session.username }}</h1>
+    <nav>
+        <ul>
+            {% if not session.user_id %}
+                <li>
+                    <a href="{{ url_for('auth.login') }}">Login</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('auth.register') }}">Register</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{{ url_for('auth.logout') }}">Logout</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    <section>
+        <ul>
+            <li>
+                <a href="{{ url_for('posts.index') }}">Posts</a>
+            </li>
+            <li>
+                <a href="{{ url_for('todo.index') }}">Todo</a>
+            </li>    
+            <li><a href="{{ url_for('meditation.index') }}">Meditation</a></li>
+        </ul>
+    </section>
 {% endblock %}

@@ -32,7 +32,6 @@ def register():
 
         if password != password2:
             error = "Password does not match"
-            return render_template("auth/register.html")
 
         if not username:
             error = "username is requried."
@@ -50,7 +49,6 @@ def register():
                 error = f"User {username} is already registered."
             else:
                 return redirect(url_for("auth.login"))
-
         flash(error)
     return render_template("auth/register.html")
 
@@ -76,6 +74,7 @@ def login():
             session["user_id"] = user["id"]
             session["username"] = user["username"]
             return redirect(url_for("index"))
+
         flash(error)
     return render_template("auth/login.html")
 
@@ -97,7 +96,7 @@ def logout():
 
 
 def login_required(view):
-    # this will be just decorator for my different view where the login is required
+    # this is the decorator for my different view where the login is required
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if g.user is None:
