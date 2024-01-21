@@ -1,22 +1,33 @@
-from flask import Blueprint # type: ignore
+from flask import Blueprint, redirect, render_template, request, session, url_for  # type: ignore
+
 from .auth import login_required
+from .db import get_db
 
-bp = Blueprint('todo', __name__, url_prefix='/todo')
+bp = Blueprint("todo", __name__, url_prefix="/todo")
 
 
-@bp.route('/')
+@bp.route("/")
 @login_required
 def index():
-    return 'TODO for myself.'
+    user_id = session["user_id"]
+    print(user_id)
+    db = get_db()
+    todos = db.execute("select * from todo where author_id = ?", (user_id,)).fetchall()
+    print([dict(todo) for todo in todos])
+    return render_template('todo/index.html', todos=todos)
 
-@bp.route('/add', methods=('GET', 'POST'))
+
+@bp.post("/add")
 def add():
-    return 'TODO for the user.'
+    user_id = session["user_id"]
+    title = request.form["title"]
+    body = request.form["body"]
+    db = get_db()
+    db.execute(
+        "INSERT INTO todo (title, body, author_id) VALUES(?, ?, ?)",
+        (title, body, user_id),
+    )
+    db.commit()
+    return redirect(url_for('todo.index'))
 
-@bp.route('/delete/<int:id>', methods=('POST', 'GET'))
-def delete(id):
-    return f'TODO to delete {id}'
 
-@bp.route('/update/<int:id>', methods=('POST', 'GET'))
-def update(id):
-    return f'TODO to update {id}'
