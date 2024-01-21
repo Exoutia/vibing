@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask  # type: ignore
+from flask import Flask, render_template, session  # type: ignore
 
 
 def create_app(test_config=None):
@@ -21,9 +21,14 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    @app.route("/")
+    def index():
+        username = session["username"]
+        return render_template('index.html', username=username)
+
     @app.route("/hello")
     def hello():
-        return "Hello, World!"
+        return render_template('hello.html')
 
     from . import db
 
@@ -32,5 +37,7 @@ def create_app(test_config=None):
     from . import auth
 
     app.register_blueprint(auth.bp)
+
+
 
     return app
