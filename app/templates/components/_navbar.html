@@ -1,0 +1,17 @@
+    <nav>
+        <h1>Vibing</h1>
+        <ul>
+            {% if not session.user_id %}
+                <li>
+                    <a href="{{ url_for('auth.login') }}">Login</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('auth.register') }}">Register</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{{ url_for('auth.logout') }}">Logout</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>

@@ -3,7 +3,17 @@
 {% block content %}
 <h1>Todo List</h1>
 <ul>
-  {% for todo in todos %}<li>{{ todo.title }}</li>{% endfor %}
+  {% for todo in todos %}
+  <li>
+    {{ todo.title }} &InvisibleTimes;
+    <form action="{{ url_for('todo.delete', id=todo.id) }}" method="post">
+      <input type="submit" value="Delete">
+    </form>
+    <form action="{{ url_for('todo.delete', id=todo.id) }}" method="post">
+      <input type="submit" value="Delete">
+    </form>
+  </li>
+  {% endfor %}
 </ul>
 <form action="{{ url_for('todo.add') }}" method="post">
   <label for="title">Title</label>

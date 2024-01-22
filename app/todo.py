@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, request, session, url_for  # type: ignore
+from flask import Blueprint, redirect, render_template, request, session, url_for
 
 from .auth import login_required
 from .db import get_db
@@ -14,7 +14,7 @@ def index():
     db = get_db()
     todos = db.execute("select * from todo where author_id = ?", (user_id,)).fetchall()
     print([dict(todo) for todo in todos])
-    return render_template('todo/index.html', todos=todos)
+    return render_template("todo/index.html", todos=todos)
 
 
 @bp.post("/add")
@@ -28,6 +28,12 @@ def add():
         (title, body, user_id),
     )
     db.commit()
-    return redirect(url_for('todo.index'))
+    return redirect(url_for("todo.index"))
 
 
+@bp.route("/<int:id>", methods=["GET", "POST"])
+def delete(id):
+    db = get_db()
+    db.execute("DELETE FROM todo WHERE id = ?", (id,))
+    db.commit()
+    return redirect(url_for("todo.index"))
