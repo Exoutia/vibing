@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}
+todo-{{ todo.title }}
+{% endblock title %}
+{% block content %}
+<h2>{{ todo.title }}</h2>
+<p>{{ todo.body }}</p>
+<p>{{ todo.created_at }}</p>
+<p>completed: {{ todo.mark }}</p>
+<form action="{{ url_for('todo.delete', id=todo.id) }}" method="post">
+  <input type="submit" value="Delete">
+</form>
+<form action="{{ url_for('todo.mark', id=todo.id) }}" method="post">
+  <input type="submit" value="mark">
+</form>
+
+<h3>Editing form</h3>
+<form action="{{ url_for('todo.edit', id=todo.id) }}" method="post">
+  <label for="title">Title</label>
+  <input type="text" name="title" id="title">
+  <label for="body">Body</label>
+  <input type="text" name="body" id="body">
+  <input type="submit" value="done">
+</form>
+{% endblock content %}
