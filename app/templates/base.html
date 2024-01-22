@@ -10,6 +10,7 @@
     </head>
     <body class="content">
         {% for message in get_flashed_messages() %}<div class="flash">{{ message }}</div>{% endfor %}
+        {% include "components/_navbar.html" %}
         {% block content %}{% endblock %}
     </body>
 </html>

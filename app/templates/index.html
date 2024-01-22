@@ -1,23 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<h1>Hello {{ session.username }}</h1>
-    <nav>
-        <ul>
-            {% if not session.user_id %}
-                <li>
-                    <a href="{{ url_for('auth.login') }}">Login</a>
-                </li>
-                <li>
-                    <a href="{{ url_for('auth.register') }}">Register</a>
-                </li>
-            {% else %}
-                <li>
-                    <a href="{{ url_for('auth.logout') }}">Logout</a>
-                </li>
-            {% endif %}
-        </ul>
-    </nav>
+    <h2> Welcome {{ session.username }} </h2>
     <section>
         <ul>
             <li>
