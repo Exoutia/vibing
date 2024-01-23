@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, redirect, render_template, request, session, url_for # type: ignore
+from flask import Blueprint, flash, g, render_template, redirect, request, url_for  # type: ignore
 
 from .auth import login_required
 from .db import get_db
@@ -9,7 +9,7 @@ bp = Blueprint("todo", __name__, url_prefix="/todo")
 @bp.route("/")
 @login_required
 def index():
-    user_id = session["user_id"]
+    user_id = g.user["id"]
     db = get_db()
     todos = db.execute("select * from todo where author_id = ?", (user_id,)).fetchall()
     print([dict(todo) for todo in todos])
@@ -18,7 +18,7 @@ def index():
 
 @bp.post("/add")
 def add():
-    user_id = session["user_id"]
+    user_id = g.user["id"]
     title = request.form["title"]
     body = request.form["body"]
     db = get_db()
@@ -58,15 +58,15 @@ def mark(id):
     return redirect(url_for("todo.index"))
 
 
-@bp.route('/<int:id>')
+@bp.route("/<int:id>")
 def todo_page(id):
     db = get_db()
     todo = db.execute("SELECT * FROM todo WHERE id = ?", (id,)).fetchone()
     if todo is None:
         flash("No todo found with this index.")
-        return redirect(url_for('todo.index'))
+        return redirect(url_for("todo.index"))
     print(todo)
-    return render_template('todo/todo_page.html', todo=dict(todo))
+    return render_template("todo/todo_page.html", todo=dict(todo))
 
 
 @bp.route("/edit/<int:id>", methods=["POST"])
