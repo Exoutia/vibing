@@ -23,3 +23,11 @@ today I am going to complete the whole process of adding and deleting the todos 
 3. [x] marking the todos
 4. [x] updating the todo
 5. [x] getting the more information on the todos
+
+## 2024-01-23
+
+Today I am going to continue working on it. 
+1. [ ] adding new posts
+2. [ ] updating posts
+3. [ ] deleting posts
+4. [ ] view for all of this.
