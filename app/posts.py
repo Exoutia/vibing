@@ -35,7 +35,7 @@ def add():
     return redirect(url_for("posts.index"))
 
 
-@bp.route("/delete/<int:id>", methods=["get", "post"])
+@bp.route("/delete/<int:id>", methods=["post"])
 @login_required
 def delete(id):
     if request.method == "POST":
