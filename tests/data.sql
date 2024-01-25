@@ -7,12 +7,12 @@ INSERT INTO post (title, body, author_id, created_at)
 VALUES
   ('test title 0', 'test 0' || x'0a' || 'body', 1, '2018-01-01 00:00:00'),
   ('test title 1', 'test 1' || x'0a' || 'body', 1, '2018-01-01 00:00:01'),
-  ('test title 2', 'test 2' || x'0a' || 'body', 2, '2018-01-01 00:00:02'),
+  ('test title 2', 'test 2' || x'0a' || 'body', 1, '2018-01-01 00:00:02'),
   ('test title 3', 'test 3' || x'0a' || 'body', 1, '2018-01-01 00:00:03'),
   ('test title 4', 'test 4' || x'0a' || 'body', 1, '2018-01-01 00:00:04'),
   ('test title 5', 'test 5' || x'0a' || 'body', 2, '2018-01-01 00:00:05'),
   ('test title 6', 'test 6' || x'0a' || 'body', 2, '2018-01-01 00:00:06'),
-  ('test title 7', 'test 7' || x'0a' || 'body', 1, '2018-01-01 00:00:07'),
+  ('test title 7', 'test 7' || x'0a' || 'body', 2, '2018-01-01 00:00:07'),
   ('test title 8', 'test 8' || x'0a' || 'body', 2, '2018-01-01 00:00:08'),
   ('test title 9', 'test 9' || x'0a' || 'body', 2, '2018-01-01 00:00:09');
 
