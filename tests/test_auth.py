@@ -1,5 +1,5 @@
-import pytest
-from flask import g, session
+import pytest # type: ignore
+from flask import g, session # type: ignore
 
 from app.db import get_db
 
