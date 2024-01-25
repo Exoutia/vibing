@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, g, render_template, redirect, request, url_for  # type: ignore
 
-from .auth import login_required
+from .auth import login, login_required
 from .db import get_db
 
 bp = Blueprint("todo", __name__, url_prefix="/todo")
@@ -17,6 +17,7 @@ def index():
 
 
 @bp.post("/add")
+@login_required
 def add():
     user_id = g.user["id"]
     title = request.form["title"]
@@ -31,6 +32,7 @@ def add():
 
 
 @bp.route("/delete/<int:id>", methods=["POST"])
+@login_required
 def delete(id):
     db = get_db()
     db.execute("DELETE FROM todo WHERE id = ?", (id,))
@@ -39,6 +41,7 @@ def delete(id):
 
 
 @bp.route("/mark/<int:id>", methods=["GET", "POST"])
+@login_required
 def mark(id):
     db = get_db()
     status = db.execute("SELECT mark FROM todo WHERE id = ?", (id,)).fetchone()
@@ -59,6 +62,7 @@ def mark(id):
 
 
 @bp.route("/<int:id>")
+@login_required
 def todo_page(id):
     db = get_db()
     todo = db.execute("SELECT * FROM todo WHERE id = ?", (id,)).fetchone()
@@ -70,6 +74,7 @@ def todo_page(id):
 
 
 @bp.route("/edit/<int:id>", methods=["POST"])
+@login_required
 def edit(id):
     db = get_db()
     todo = db.execute("SELECT * FROM todo WHERE id = ?", (id,)).fetchone()
