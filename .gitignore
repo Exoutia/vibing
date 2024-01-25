@@ -297,3 +297,6 @@ tags
 
 # End of https://www.toptal.com/developers/gitignore/api/python,flask,vim
 hint
+
+# vscode
+.vscode/
