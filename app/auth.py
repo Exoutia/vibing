@@ -31,12 +31,12 @@ def register():
         error = None
 
         if password != password2:
-            error = "Password does not match"
+            error = "password does not match"
 
         if not username:
-            error = "username is requried."
+            error = "username is required."
         elif not password:
-            error = "Password is required"
+            error = "password is required."
 
         if error is None:
             try:
