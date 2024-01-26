@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, g, render_template, redirect, request, url_for  # type: ignore
 
-from .auth import login, login_required
+from .auth import login_required
 from .db import get_db
 
 bp = Blueprint("todo", __name__, url_prefix="/todo")
@@ -82,17 +82,16 @@ def edit(id):
         flash("Todo not found")
         return redirect(url_for("todo.index"))
 
-    if request.method == "POST":
-        title = request.form["title"]
-        body = request.form["body"]
-        db.execute(
-            "UPDATE todo SET title = ?, body = ? where id = ?",
-            (
-                title,
-                body,
-                id,
-            ),
-        )
-        db.commit()
-        flash("done editing")
+    title = request.form["title"]
+    body = request.form["body"]
+    db.execute(
+        "UPDATE todo SET title = ?, body = ? where id = ?",
+        (
+            title,
+            body,
+            id,
+        ),
+    )
+    db.commit()
+    flash("done editing")
     return redirect(url_for("todo.todo_page", id=id))
